@@ -1,154 +1,98 @@
-canvas = document.getElementById('myCanvas');
-ctx = canvas.getContext("2d");
+var mouseEvent = "empty";
 
-//Create an array "nasa_mars_images_array" and store all the image file names.
+    canvas = document.getElementById('myCanvas');
+    ctx = canvas.getContext("2d");
+    
+    color = "black";
+    width_of_line = 2;
 
-nasa_mars_images_array=["nasa_image_1.jpg","nasa_image_2.jpeg","nasa_image_3.jpg","nasa_image_4.jpg"];
-//Generate random number and store it in variable "random_number"
+    /*Uncomment the correct line*/
+    //canvas.addEventListener("mousedown", my_mousedown);
+    //canvas.setEventListener("mousedown", my_mousedown);
+    //canvas.getEventListener("mousedown", my_mousedown);
+    canvas.addEventListener("mousedown,my_mousedown");
 
-random_number =Math.floor(Math.random()*4);
-console.log(random_number);
-rover_width = 100;
-rover_height = 90;
+    function my_mousedown(e)
+    {
+        color = document.getElementById("color").value;
+        width_of_line = document.getElementById("width_of_line").value;
+        radius = document.getElementById("radius").value;
+        mouseEvent = "mouseDown";
+    }
 
-/*Pass this random_number as the index to the array and update the background_image variable 
-with the following*/
-background_image=nasa_mars_images_array[random_number];
+    /*
+    Create an event listener for "mousemove"
+    and call function my_mousemove
+    */
+canvas.addEventListener("mousemove,my_mousemove")
+    function my_mousemove(e)
+    {
+        /*Uncomment the correct line*/
+        //current_position_of_mouse_x = e.clientX - canvas.offsetLeft;
+        //current_position_of_mouse_x = e.clientX - canvas.offsetRight;
+        //current_position_of_mouse_x = e.clientX - canvas.offsetBottom;
+current_position_of_mouse_x = e.clientX -canvas.offsetLeft;
+        /*
+        create current_position_of_mouse_y and
+        assign it e.clientY - canvas.offsetTop;
+        */
+current_position_of_mouse_y = e.clientY -canvas.offsetTop 
+        if (mouseEvent == "mouseDown") {
+        console.log("Current position of x and y coordinates = ");
+        console.log("x  = " + current_position_of_mouse_x + "y = " + current_position_of_mouse_y);
+        ctx.beginPath();
+        ctx.strokeStyle = color;
+        ctx.lineWidth = width_of_line;
+        ctx.arc(current_position_of_mouse_x, current_position_of_mouse_y, radius ,0 , 2 * Math.PI);
+        ctx.stroke();
+        }
 
-//console this background_image variable to see when images come, everytime we refresh the page.
-console.log("background_image=" +background_image);
+    }
+
+    /*Create an event listener for "mouseup"
+    and call function my_mouseup
+
+    
 
 
-rover_image = "rover.png";
 
-rover_x = 10;
-rover_y = 10;
+    Create a function named my_mouseup with
+    event e as parameter.
+    
+    Assign "mouseUP" to mouseEvent
+    within the function
+    */
+    
+    /*Create an event listener for "mouseleave"
+    and call function my_mouseleave
 
-function add() {
-	background_imgTag = new Image(); //defining a variable with a new image
-	background_imgTag.onload = uploadBackground; // setting a function, onloading this variable
-	background_imgTag.src = background_image;   // load image
+    Create a function named my_mouseleave with
+    event e as parameter.
+    
+    Assign "mouseleave" to mouseEvent
+    within the function
+    */
+canvas.addEventListener("mouseup",my_mouseup)
 
-	rover_imgTag = new Image(); //defining a variable with a new image
-	rover_imgTag.onload = uploadrover; // setting a function, onloading this variable
-	rover_imgTag.src = rover_image;   // load image
+function my_mouseup
+(e){
+
+mouseEvent="mouseup"
+
+
 }
 
-function uploadBackground() {
-	ctx.drawImage(background_imgTag, 0, 0, canvas.width, canvas.height);
-}
+canvas.addEventListener("mouseleave",my_mouseleave)
 
-function uploadrover() {
-	ctx.drawImage(rover_imgTag, rover_x, rover_y, rover_width, rover_height);
-}
+function my_mouseleave (e){
+
+mouseEvent="mouseleave"
 
 
-window.addEventListener("keydown", my_keydown);
-
-function my_keydown(e)
-{
-	keyPressed = e.keyCode;
-	console.log(keyPressed);
-		if(keyPressed == '38')
-		{
-			up();
-			console.log("up");
-		}
-		if(keyPressed == '40')
-		{
-			down();
-			console.log("down");
-		}
-		if(keyPressed == '37')
-		{
-			left();
-			console.log("left");
-		}
-		if(keyPressed == '39')
-		{
-			right();
-			console.log("right");
-		}
-}
-
-//Add the code for up() function:
-
-function up()
-{
-
-
-if(rover_y >=0){
-	rover_y=rover_y -10;
-	console.log('when up arrow is pressed, x='+rover_x +"|y=" +rover_y)
-	uploadBackground();
-	uploadrover();
-}
-}
-
-
-
-
-
-
-//Add the code for down() function:
-function down()
-{
-if(rover_y <=500){
-	rover_y=rover_y +10;
-	console.log('when down arrow is pressed, x='+rover_x +"|y=" +rover_y)
-	uploadBackground();
-	uploadrover();
-}
+    
 }
 
 
-function left()
-{
-if(rover_x >=0){
-	rover_x=rover_x -10;
-	console.log('when left arrow is pressed, x='+rover_x +"|y=" +rover_y)
-	uploadBackground();
-	uploadrover();
+function clearArea() {
+    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 }
-}
-
-
-
-
-
-
-
-
-
-//Add the code for right() function:
-
-function right()
-{
-if(rover_x <=700){
-	rover_x=rover_x +10;
-	console.log('when right arrow is pressed, x='+rover_x +"|y=" +rover_y)
-	uploadBackground();
-	uploadrover();
-}
-}
-
-
-
-
-
-
-
-
-
-
-//Additional Activity
-//Add the code for up() function:
-
-
-
-
-
-
-
-
-	
